@@ -77,14 +77,14 @@ class GroupListActivity : AppCompatActivity(), GroupListDialog.DialogListener {
         }
 
         viewModel.getAllGroupMemberList().observe(this) {
-            /*adapter.setListGroupMember(it)*/
-            countMember(it)
+            adapter.setListGroupMember(it)
+          /*  countMember(it)*/
 
         }
 
     }
 
-    private fun countMember(it: List<Group>) {
+   /* private fun countMember(it: List<Group>) {
         val listGroup2 = mutableListOf<Group2>()
         it.forEach { data ->
             viewModelMember.getAllCountMember(data.groupId!!).observe(this) { count ->
@@ -99,7 +99,7 @@ class GroupListActivity : AppCompatActivity(), GroupListDialog.DialogListener {
             }
         }
         adapter.setListGroupMember(listGroup2)
-    }
+    }*/
 
     private fun obtainViewModel(activity: AppCompatActivity): GroupViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)

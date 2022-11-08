@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lupa.member.database.Group
-import com.lupa.member.database.Group2
 import com.lupa.member.databinding.ItemGroupRowBinding
 import com.lupa.member.helper.GroupDiffCallback
 import com.lupa.member.ui.insert.MemberListActivity
@@ -15,9 +14,9 @@ import com.lupa.member.ui.insert.MemberListActivity.Companion.GROUP_ID
 
 class GroupAdapter : RecyclerView.Adapter<GroupAdapter.MemberViewHolder>() {
 
-    private val listGroupMember = ArrayList<Group2>()
+    private val listGroupMember = ArrayList<Group>()
 
-    fun setListGroupMember(listGroupMember: List<Group2>) {
+    fun setListGroupMember(listGroupMember: List<Group>) {
         val diffCallback = GroupDiffCallback(this.listGroupMember, listGroupMember)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listGroupMember.clear()
@@ -41,7 +40,7 @@ class GroupAdapter : RecyclerView.Adapter<GroupAdapter.MemberViewHolder>() {
     inner class MemberViewHolder(private val binding: ItemGroupRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(group: Group2) {
+        fun bind(group: Group) {
             binding.tvTitleList.text = group.groupName
             binding.tvDescList.text = group.groupNote
             binding.btnAddMemberList.setOnClickListener {
