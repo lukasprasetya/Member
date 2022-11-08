@@ -18,8 +18,9 @@ class Repository(application: Application) {
         mGroupDao = db.groupDao()
     }
 
-    fun getAllMembers(groupId : Int): LiveData<List<Member>> = mMemberDao.getAllMembers(groupId)
-    fun getAllCounts(groupId : Int): LiveData<Int> = mMemberDao.getCountMembers(groupId)
+    fun getAllMembers(groupId: Int): LiveData<List<Member>> = mMemberDao.getAllMembers(groupId)
+
+    fun getAllCounts(groupId: Int): LiveData<Int> = mMemberDao.getCountMembers(groupId)
 
     fun getAllGroup(): LiveData<List<Group>> = mGroupDao.getAllGroups()
 
@@ -27,12 +28,16 @@ class Repository(application: Application) {
         executorService.execute { mMemberDao.insertMember(member) }
     }
 
-    fun delete(member: Member) {
+    fun deleteMember(member: Member) {
         executorService.execute { mMemberDao.deleteMember(member) }
     }
 
     fun insertGroup(group: Group) {
         executorService.execute { mGroupDao.insertGroup(group) }
+    }
+
+    fun deleteGroup(group: Group){
+        executorService.execute { mGroupDao.deleteGroup(group) }
     }
 
 }

@@ -15,13 +15,11 @@ interface MemberDao {
 
     @Query("SELECT COUNT(group_id) FROM tb_member WHERE group_id = :groupId")
     fun getCountMembers(groupId: Int): LiveData<Int>
-    /* @Query("SELECT * FROM tb_member WHERE member_id = :id")
-     suspend fun getAllMembersById(id: Int): Member*/
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMember(member: Member): Long
 
     @Delete
-    fun deleteMember(member: Member): Int
+    fun deleteMember(member: Member)
 
 }

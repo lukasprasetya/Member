@@ -23,7 +23,6 @@ class AddMemberDialog : DialogFragment() {
             setView(binding.root)
 
             binding.btnMemberAdd.setOnClickListener {
-                /*val member = getData() ?: return@setOnClickListener*/
                 if (binding.edtNameMemberAdd.text.isEmpty()) {
                     showMessage(R.string.text_not_blank)
                 } else {

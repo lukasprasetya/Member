@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.lupa.member.database.Group
 import com.lupa.member.database.Member
 import com.lupa.member.databinding.ItemMemberRowBinding
 import com.lupa.member.helper.MemberDiffCallback
 
-class MemberAdapter : RecyclerView.Adapter<MemberAdapter.AddMemberViewHolder>() {
+class MemberAdapter(private val listener: OnCLickListenerMember) :
+    RecyclerView.Adapter<MemberAdapter.AddMemberViewHolder>() {
 
     private val listMember = ArrayList<Member>()
 
@@ -24,7 +26,7 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.AddMemberViewHolder>() 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddMemberViewHolder {
         val binding =
             ItemMemberRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AddMemberViewHolder(binding)
+        return AddMemberViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: AddMemberViewHolder, position: Int) {
@@ -35,12 +37,20 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.AddMemberViewHolder>() 
         return listMember.size
     }
 
-    class AddMemberViewHolder(private val binding: ItemMemberRowBinding) :
+    class AddMemberViewHolder(
+        private val binding: ItemMemberRowBinding,
+        private val listener: OnCLickListenerMember
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(member: Member) {
             binding.tvNameMember.text = member.memberName
-
+            binding.ivDeleteMember.setOnClickListener {
+                listener.onDeleteClickListenerMember(member)
+            }
         }
+    }
 
+    interface OnCLickListenerMember {
+        fun onDeleteClickListenerMember(member: Member)
     }
 }

@@ -13,11 +13,12 @@ class GroupViewModel(application: Application) : ViewModel() {
 
     fun getAllGroupMemberList(): LiveData<List<Group>> = mRepository.getAllGroup()
 
-    fun delete(member: Member) {
-        mRepository.delete(member)
-    }
-
     fun insertGroup(group: Group){
         mRepository.insertGroup(group)
     }
+
+    fun deleteGroup(group: Group) {
+        mRepository.deleteGroup(group)
+    }
+
 }

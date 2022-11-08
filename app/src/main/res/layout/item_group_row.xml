@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/blue_1"
             android:textSize="24sp"
@@ -43,29 +43,6 @@
             app:layout_constraintStart_toStartOf="@id/tv_title_list"
             app:layout_constraintTop_toBottomOf="@id/tv_title_list"
             tools:text="Deskripsi Group" />
-
-        <TextView
-            android:id="@+id/tv_member_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:text="Member: "
-            android:textColor="@color/black_1"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_title_list"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc_list" />
-
-        <TextView
-            android:id="@+id/tv_count_member_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black_1"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/tv_member_list"
-            app:layout_constraintTop_toTopOf="@id/tv_member_list"
-            tools:text="12" />
 
 
         <Button
@@ -90,7 +67,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:paddingHorizontal="23dp"
-            android:text="Delete List"
+            android:text="@string/text_delete_list"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/btn_add_member_list"

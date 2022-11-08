@@ -5,4 +5,14 @@
     <string name="text_lorem">Lorem ipsum dolor sit amet sed do eiusmod.</string>
     <string name="text_add_list">Add List</string>
     <string name="text_not_blank">Field can not be blank</string>
+    <string name="text_add_member">Add Member</string>
+    <string name="text_member_name">Member Name</string>
+    <string name="text_add">Add</string>
+    <string name="text_add_list_title">Add List</string>
+    <string name="text_group_name">Group Name</string>
+    <string name="text_notes">Notes (e.g. This is Football group)</string>
+    <string name="text_delete_list">Delete List</string>
+    <string name="text_delete_dialog">Delete</string>
+    <string name="text_yes_dialog">Yes</string>
+    <string name="text_no_dialog">No</string>
 </resources>
