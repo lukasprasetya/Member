@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Member</string>
+    <string name="text_list">List</string>
+    <string name="text_member">Member</string>
+    <string name="text_lorem">Lorem ipsum dolor sit amet sed do eiusmod.</string>
+    <string name="text_add_list">Add List</string>
+    <string name="text_not_blank">Field can not be blank</string>
+</resources>
