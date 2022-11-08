@@ -3,15 +3,10 @@ package com.lupa.member.dialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import com.lupa.member.database.Member
 import com.lupa.member.databinding.ActivityDialogBinding
-import com.lupa.member.ui.ViewModelFactory
-import com.lupa.member.ui.main.MemberActivity
-import com.lupa.member.ui.main.MemberAddUpdateViewModel
+import com.lupa.member.ui.main.GroupViewModel
 
 class AddListDialogFragment(
     private val title: String,
@@ -29,7 +24,7 @@ class AddListDialogFragment(
     private var isEdit = false
     private var member: Member? = null
 
-    private lateinit var memberAddUpdateViewModel: MemberAddUpdateViewModel
+    private lateinit var memberAddUpdateViewModel: GroupViewModel
     private var _dialogBinding: ActivityDialogBinding? = null
     private val bindingDialog get() = _dialogBinding
 

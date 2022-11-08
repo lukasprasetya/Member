@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lupa.member.database.Member
-import com.lupa.member.databinding.ItemListRowBinding
 import com.lupa.member.databinding.ItemMemberRowBinding
 import com.lupa.member.helper.MemberDiffCallback
 
-class AddMemberAdapter : RecyclerView.Adapter<AddMemberAdapter.AddMemberViewHolder>() {
+class MemberAdapter : RecyclerView.Adapter<MemberAdapter.AddMemberViewHolder>() {
 
     private val listMember = ArrayList<Member>()
 
@@ -39,7 +38,8 @@ class AddMemberAdapter : RecyclerView.Adapter<AddMemberAdapter.AddMemberViewHold
     class AddMemberViewHolder(private val binding: ItemMemberRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(member: Member) {
-            binding.tvNameMember.text = member.name
+            binding.tvNameMember.text = member.memberName
+
         }
 
     }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.lupa.member.R
+import com.lupa.member.database.Group
 import com.lupa.member.database.Member
 import com.lupa.member.databinding.ActivityDialogBinding
 
@@ -22,22 +23,17 @@ class GroupListDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireContext()).apply {
             setView(binding.root)
 
-            /*setPositiveButton("Add") { _, _ ->
-                val member = getData() ?: return@setPositiveButton
-                val listener = requireActivity() as DialogListener
-                listener.processDialog(member)
-            }*/
             binding.btnAddListDialog.setOnClickListener {
-                val member= getData() ?: return@setOnClickListener
+                val group= getData() ?: return@setOnClickListener
                 val listener = requireActivity() as DialogListener
-                listener.processDialog(member)
+                listener.processDialog(group)
                 dismiss()
             }
         }
         return builder.create()
     }
 
-    private fun getData(): Member? {
+    private fun getData(): Group? {
 
         if (binding.edtListName.text.isEmpty()) {
             showMessage(R.string.text_not_blank)
@@ -47,10 +43,9 @@ class GroupListDialog : DialogFragment() {
             showMessage(R.string.text_not_blank)
             return null
         }
-        return Member(
-            name = "",
-            group = binding.edtListName.text.toString(),
-            note = binding.edtListNote.text.toString()
+        return Group(
+            groupName = binding.edtListName.text.toString(),
+            groupNote = binding.edtListNote.text.toString()
         )
     }
 
@@ -61,7 +56,7 @@ class GroupListDialog : DialogFragment() {
         }
     }
     interface DialogListener {
-        fun processDialog(member: Member)
+        fun processDialog(group: Group)
 
     }
 }

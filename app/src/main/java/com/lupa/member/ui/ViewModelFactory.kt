@@ -3,8 +3,8 @@ package com.lupa.member.ui
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.lupa.member.ui.insert.AddMemberViewModel
-import com.lupa.member.ui.main.MemberAddUpdateViewModel
+import com.lupa.member.ui.insert.MemberViewModel
+import com.lupa.member.ui.main.GroupViewModel
 
 class ViewModelFactory (private val mApplication: Application) :
     ViewModelProvider.NewInstanceFactory() {
@@ -26,10 +26,10 @@ class ViewModelFactory (private val mApplication: Application) :
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MemberAddUpdateViewModel::class.java)) {
-            return MemberAddUpdateViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(AddMemberViewModel::class.java)) {
-            return AddMemberViewModel(mApplication) as T
+        if (modelClass.isAssignableFrom(GroupViewModel::class.java)) {
+            return GroupViewModel(mApplication) as T
+        } else if (modelClass.isAssignableFrom(MemberViewModel::class.java)) {
+            return MemberViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

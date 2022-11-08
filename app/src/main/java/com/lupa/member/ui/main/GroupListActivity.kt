@@ -2,81 +2,70 @@ package com.lupa.member.ui.main
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.ActionMode
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lupa.member.R
+import com.lupa.member.database.Group
+import com.lupa.member.database.Group2
 import com.lupa.member.database.Member
-import com.lupa.member.database.MemberRoomDatabase
-import com.lupa.member.databinding.ActivityDialogBinding
-import com.lupa.member.databinding.ActivityMemberBinding
-import com.lupa.member.databinding.ItemListRowBinding
-import com.lupa.member.dialog.AddListDialogFragment
+import com.lupa.member.databinding.ActivityGroupListBinding
+import com.lupa.member.databinding.ItemGroupRowBinding
 import com.lupa.member.dialog.GroupListDialog
 import com.lupa.member.ui.ViewModelFactory
-import com.lupa.member.ui.insert.AddMemberActivity
+import com.lupa.member.ui.insert.MemberListActivity
+import com.lupa.member.ui.insert.MemberViewModel
 
-class MemberActivity : AppCompatActivity(), GroupListDialog.DialogListener {
+class GroupListActivity : AppCompatActivity(), GroupListDialog.DialogListener {
 
-    private val binding: ActivityMemberBinding by lazy {
-        ActivityMemberBinding.inflate(layoutInflater)
+    private val binding: ActivityGroupListBinding by lazy {
+        ActivityGroupListBinding.inflate(layoutInflater)
     }
 
-    private lateinit var adapter: MemberAdapter
-   /* private var actionMode: ActionMode? = null*/
+    private lateinit var adapter: GroupAdapter
+    /* private var actionMode: ActionMode? = null*/
 
-    private val viewModel: MemberAddUpdateViewModel by lazy {
-       obtainViewModel(this@MemberActivity)
+    private val viewModel: GroupViewModel by lazy {
+        obtainViewModel(this@GroupListActivity)
     }
 
-    private val bindingItemListRowBinding: ItemListRowBinding by lazy {
-        ItemListRowBinding.inflate(layoutInflater)
+    private val viewModelMember: MemberViewModel by lazy {
+        obtainViewModelMember(this@GroupListActivity)
+    }
+
+    private val bindingItemListRowBinding: ItemGroupRowBinding by lazy {
+        ItemGroupRowBinding.inflate(layoutInflater)
     }
 
     companion object {
-       // const val EXTRA_MEMBER = "ESXTRA_MEMBER"
-       const val ALERT_DIALOG_CLOSE = 10
+        const val ALERT_DIALOG_CLOSE = 10
         const val ALERT_DIALOG_DELETE = 20
     }
 
-   /* private var isEdit = false*/
     private var member: Member? = null
-
-   /* private lateinit var memberAddUpdateViewModel: MemberAddUpdateViewModel
-    private var _dialogBinding: ActivityDialogBinding? = null
-    private val bindingDialog get() = _dialogBinding*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
-       // setOnClickListeners()
-
-        /*val mainViewModel = obtainViewModel(this@MemberActivity)
-        mainViewModel.getAllGroupMemberList().observe(this) { groupMemberList ->
-            if (groupMemberList != null) {
-                adapter.setListGroupMember(groupMemberList)
-            }
-        }*/
 
         binding.btnAddList.setOnClickListener {
-            GroupListDialog().show(supportFragmentManager,"Group List Dialog")
+            GroupListDialog().show(supportFragmentManager, "Group List Dialog")
         }
 
-        adapter = MemberAdapter()
+        adapter = GroupAdapter()
 
         binding.rvGroupMemberList.layoutManager = LinearLayoutManager(this)
         binding.rvGroupMemberList.setHasFixedSize(true)
         binding.rvGroupMemberList.adapter = adapter
 
         bindingItemListRowBinding.btnAddMemberList.setOnClickListener { view ->
-            if (view.id == R.id.btn_add_member_list){
-                val intent= Intent(this@MemberActivity,AddMemberActivity::class.java)
+            if (view.id == R.id.btn_add_member_list) {
+                val intent = Intent(this@GroupListActivity, MemberListActivity::class.java)
                 startActivity(intent)
                 Log.d(TAG, "onCreate: masuk")
                 Toast.makeText(this, "masuk harusnya", Toast.LENGTH_SHORT).show()
@@ -88,39 +77,38 @@ class MemberActivity : AppCompatActivity(), GroupListDialog.DialogListener {
         }
 
         viewModel.getAllGroupMemberList().observe(this) {
-            adapter.setListGroupMember(it)
-            Log.d(TAG, "onCreate: list")
+            /*adapter.setListGroupMember(it)*/
+            countMember(it)
+
         }
 
+    }
 
-        //member = intent.getParcelableExtra(EXTRA_MEMBER)
-        /* if (member != null) {
-             isEdit = true
-         } else {
-             member = Member()
-         }*/
-
-       /* if (member != null) {
-            member?.let { member ->
-                bindingDialog?.edtListName?.setText(member.group)
-                bindingDialog?.edtListNote?.setText(member.note)
+    private fun countMember(it: List<Group>) {
+        val listGroup2 = mutableListOf<Group2>()
+        it.forEach { data ->
+            viewModelMember.getAllCountMember(data.groupId!!).observe(this) { count ->
+                val group2 =
+                    Group2(
+                        groupId = data.groupId,
+                        groupName = data.groupName,
+                        groupNote = data.groupNote,
+                        groupCount = count
+                    )
+                listGroup2.add(group2)
             }
-        }*/
-
-     /*   _dialogBinding = ActivityDialogBinding.inflate(layoutInflater)
-
-        memberAddUpdateViewModel = obtainViewModel(this@MemberActivity)*/
-
-
+        }
+        adapter.setListGroupMember(listGroup2)
     }
 
-    private fun obtainViewModel(activity: AppCompatActivity): MemberAddUpdateViewModel {
+    private fun obtainViewModel(activity: AppCompatActivity): GroupViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[MemberAddUpdateViewModel::class.java]
+        return ViewModelProvider(activity, factory)[GroupViewModel::class.java]
     }
 
-    override fun processDialog(member: Member) {
-        viewModel.insert(member)
+    private fun obtainViewModelMember(activity: AppCompatActivity): MemberViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[MemberViewModel::class.java]
     }
 
     override fun onBackPressed() {
@@ -160,6 +148,10 @@ class MemberActivity : AppCompatActivity(), GroupListDialog.DialogListener {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun processDialog(group: Group) {
+        viewModel.insertGroup(group)
     }
 
     /*private fun setOnClickListeners() {

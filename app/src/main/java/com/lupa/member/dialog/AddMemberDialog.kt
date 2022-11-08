@@ -10,8 +10,6 @@ import androidx.fragment.app.DialogFragment
 import com.lupa.member.R
 import com.lupa.member.database.Member
 import com.lupa.member.databinding.ActivityAddMemberDialogBinding
-import com.lupa.member.databinding.ActivityDialogBinding
-import com.lupa.member.databinding.ItemListRowBinding
 
 class AddMemberDialog : DialogFragment() {
 
@@ -24,16 +22,16 @@ class AddMemberDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireContext()).apply {
             setView(binding.root)
 
-            /*setPositiveButton("Add") { _, _ ->
-                val member = getData() ?: return@setPositiveButton
-                val listener = requireActivity() as DialogListener
-                listener.processDialog(member)
-            }*/
             binding.btnMemberAdd.setOnClickListener {
-                val member = getData() ?: return@setOnClickListener
-                val listener = requireActivity() as DialogListener
-                listener.processDialog(member)
-                dismiss()
+                /*val member = getData() ?: return@setOnClickListener*/
+                if (binding.edtNameMemberAdd.text.isEmpty()) {
+                    showMessage(R.string.text_not_blank)
+                } else {
+                    val memberName = binding.edtNameMemberAdd.text.toString()
+                    val listener = requireActivity() as DialogListener
+                    listener.processDialog(memberName)
+                    dismiss()
+                }
             }
         }
         return builder.create()
@@ -46,9 +44,7 @@ class AddMemberDialog : DialogFragment() {
             return null
         }
         return Member(
-            name = binding.edtNameMemberAdd.text.toString(),
-            group = toString(),
-            note = toString()
+            memberName = binding.edtNameMemberAdd.text.toString(),
         )
     }
 
@@ -60,6 +56,6 @@ class AddMemberDialog : DialogFragment() {
     }
 
     interface DialogListener {
-        fun processDialog(member: Member)
+        fun processDialog(memberName: String)
     }
 }

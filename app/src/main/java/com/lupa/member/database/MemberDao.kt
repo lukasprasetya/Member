@@ -10,21 +10,18 @@ import androidx.room.Update
 
 @Dao
 interface MemberDao {
-    @Query("SELECT * FROM tb_member ORDER BY id ASC")
-    fun getAllMembers(): LiveData<List<Member>>
+    @Query("SELECT * FROM tb_member WHERE group_id = :groupId ORDER BY member_id  DESC")
+    fun getAllMembers(groupId: Int): LiveData<List<Member>>
 
-    @Query("SELECT * FROM tb_member WHERE id == :id")
-    suspend fun getAllMembersById(id: Int): Member
+    @Query("SELECT COUNT(group_id) FROM tb_member WHERE group_id = :groupId")
+    fun getCountMembers(groupId: Int): LiveData<Int>
+    /* @Query("SELECT * FROM tb_member WHERE member_id = :id")
+     suspend fun getAllMembersById(id: Int): Member*/
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMember(member: Member): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMembers(member: List<Member>)
-
     @Delete
     fun deleteMember(member: Member): Int
 
-    @Update
-    suspend fun updateMember(member: Member): Int
 }

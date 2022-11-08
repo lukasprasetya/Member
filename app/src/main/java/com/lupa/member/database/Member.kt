@@ -9,15 +9,14 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "tb_member")
 data class Member(
-    @PrimaryKey(autoGenerate = false)
-    var id: Int? = null,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "member_id")
+    var memberId: Int? = null,
 
-    @ColumnInfo(name = "name")
-    var name: String,
+    @ColumnInfo(name = "group_id")
+    val groupId: Int? = null,
 
-    @ColumnInfo(name = "note")
-    var note: String,
+    @ColumnInfo(name = "member_name")
+    var memberName: String
 
-    @ColumnInfo(name = "group")
-    var group: String
 ) : Parcelable

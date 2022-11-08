@@ -17,12 +17,12 @@ class MemberDiffCallback(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldGroupMemberList[oldItemPosition].id == mNewGroupMemberList[newItemPosition].id
+        return mOldGroupMemberList[oldItemPosition].memberId == mNewGroupMemberList[newItemPosition].memberId
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldEmployee = mOldGroupMemberList[oldItemPosition]
         val newEmployee = mNewGroupMemberList[newItemPosition]
-        return oldEmployee.group == newEmployee.group && oldEmployee.note == newEmployee.note
+        return oldEmployee.memberName == newEmployee.memberName
     }
 }
